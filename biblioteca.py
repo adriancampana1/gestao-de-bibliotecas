@@ -1,5 +1,8 @@
+from livro import Livro
+
 class Biblioteca:
-    def __init__(self, nome, endereco, id):
+    def __init__(self, nome, endereco, descricao=""):
         self.nome = nome
         self.endereco = endereco
-        self.id = id
+        self.descricao = descricao
+        self.livros = []

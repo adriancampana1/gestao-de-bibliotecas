@@ -1,0 +1,1 @@
+print(emprestimo1.livros[0].titulo)
