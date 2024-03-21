@@ -1,0 +1,89 @@
+class Biblioteca:
+    def __init__(self, nome, endereco):
+        self.nome = nome
+        self.endereco = endereco
+        self.livros_disponiveis = []
+        self.emprestimos_ativos = []
+
+    def adicionar_livro(self, livro):
+        self.livros_disponiveis.append(livro)
+
+    def remover_livro(self, livro):
+        if livro in self.livros_disponiveis:
+            self.livros_disponiveis.remove(livro)
+        else:
+            print("O livro não está disponível na biblioteca.")
+
+    def realizar_emprestimo(self, livro, pessoa):
+        if livro in self.livros_disponiveis:
+            self.livros_disponiveis.remove(livro)
+            emprestimo = Emprestimo(livro, pessoa)
+            self.emprestimos_ativos.append(emprestimo)
+            print("Empréstimo realizado com sucesso.")
+        else:
+            print("O livro não está disponível para empréstimo.")
+
+    def devolver_livro(self, livro):
+        for emprestimo in self.emprestimos_ativos:
+            if emprestimo.livro == livro:
+                self.emprestimos_ativos.remove(emprestimo)
+                self.livros_disponiveis.append(livro)
+                print("Livro devolvido com sucesso.")
+                return
+        print("Este livro não foi emprestado da biblioteca.")
+
+
+class Pessoa:
+    def __init__(self, nome, idade):
+        self.nome = nome
+        self.idade = idade
+
+
+class Autor(Pessoa):
+    def __init__(self, nome, idade, nacionalidade):
+        super().__init__(nome, idade)
+        self.nacionalidade = nacionalidade
+
+
+class Usuario(Pessoa):
+    def __init__(self, nome, idade, endereco):
+        super().__init__(nome, idade)
+        self.endereco = endereco
+
+
+class Funcionario(Pessoa):
+    def __init__(self, nome, idade, cargo):
+        super().__init__(nome, idade)
+        self.cargo = cargo
+
+
+class Livro:
+    def __init__(self, titulo, autor, ano_publicacao):
+        self.titulo = titulo
+        self.autor = autor
+        self.ano_publicacao = ano_publicacao
+
+
+class Emprestimo:
+    def __init__(self, livro, pessoa):
+        self.livro = livro
+        self.pessoa = pessoa
+
+
+# Exemplo de utilização:
+
+# Criando objetos
+autor1 = Autor("Autor 1", 40, "Brasileiro")
+usuario1 = Usuario("Usuario 1", 25, "Rua A")
+funcionario1 = Funcionario("Funcionario 1", 30, "Bibliotecário")
+livro1 = Livro("Livro 1", autor1, 2020)
+biblioteca = Biblioteca("Biblioteca Central", "Av. Principal")
+
+# Adicionando livro à biblioteca
+biblioteca.adicionar_livro(livro1)
+
+# Realizando empréstimo
+biblioteca.realizar_emprestimo(livro1, usuario1)
+
+# Devolvendo livro
+biblioteca.devolver_livro(livro1)
